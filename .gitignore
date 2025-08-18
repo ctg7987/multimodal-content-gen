@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.env
+.DS_Store
+web/node_modules/
+web/.next/
+web/.turbo/
+npm-debug.log*
+yarn-*.log
+*.log

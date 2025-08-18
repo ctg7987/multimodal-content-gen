@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+pydantic
+numpy
+pillow
+transformers
+# open-clip-torch
+# Uncomment when needed
+python-dotenv
