@@ -429,8 +429,9 @@ export default function Page() {
                   🖼️ Generated Images
                 </h3>
                 <div style={{ 
-                  display: 'grid', 
-                  gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', 
+                  display: 'flex', 
+                  flexWrap: 'wrap',
+                  justifyContent: 'center',
                   gap: '1.5rem'
                 }}>
                   {job.result.images.map((src, i) => (
@@ -440,7 +441,10 @@ export default function Page() {
                       overflow: 'hidden',
                       backgroundColor: 'white',
                       boxShadow: '0 8px 25px rgba(16, 185, 129, 0.2)',
-                      transition: 'transform 0.3s ease'
+                      transition: 'transform 0.3s ease',
+                      width: '400px',
+                      maxWidth: '100%',
+                      margin: '0 auto'
                     }}>
                       <img 
                         src={src} 
