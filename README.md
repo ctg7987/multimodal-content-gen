@@ -6,6 +6,7 @@ A full-stack application that generates professional marketing content across mu
 
 ### Prompt Interface
 ![Prompt Interface](docs/prompt-interface-screenshot.png)
+
 *The clean, modern form interface for entering campaign details*
 
 ### Generated Results
