@@ -2,9 +2,15 @@
 
 A full-stack application that generates professional marketing content across multiple channels using AI-powered pipelines. Built with FastAPI backend and Next.js frontend.
 
-![Screenshot](docs/multimodal-content-generator-screenshot.png)
+## 🖼️ Screenshots
 
-*Screenshot showing the working application with real AI-generated content using GPT-4 and DALL-E-3*
+### Prompt Interface
+![Prompt Interface](docs/prompt-interface-screenshot.png)
+*The clean, modern form interface for entering campaign details*
+
+### Generated Results
+![Generated Results](docs/multimodal-content-generator-screenshot.png)
+*Real AI-generated marketing content with professional copy and images using GPT-4 and DALL-E-3*
 
 ## ✅ Current Status
 
