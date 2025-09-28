@@ -4,7 +4,7 @@ from uuid import uuid4
 from typing import Dict, Any
 
 from .schemas import GenerateRequest, JobStatusResponse
-from .config import JOBS
+from .config import JOBS, CORS_ORIGINS
 from .pipelines import text as text_pipeline
 from .pipelines import promptify as promptify_pipeline
 from .pipelines import image as image_pipeline
@@ -14,12 +14,12 @@ from .pipelines import rag as rag_pipeline
 
 app = FastAPI(title="Multimodal Marketing Content Generator", version="0.1.0")
 
-# Permissive CORS for local dev
+# CORS configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=CORS_ORIGINS,
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["*"],
 )
 
@@ -36,30 +36,37 @@ def generate(payload: GenerateRequest) -> JobStatusResponse:
         "input": payload.model_dump(),
     }
 
-    # Stubbed pipeline execution (synchronous and immediate for now)
-    # TODO: Offload to background tasks or a queue system (e.g., Celery/RQ) when adding real providers
+    # Enhanced pipeline execution with RAG and improved prompts
     try:
-        # TODO: Use rag to retrieve knowledge
-        _ctx = rag_pipeline.rag_retrieve(payload.model_dump())
-        # TODO: prompt engineering
-        _prompt = promptify_pipeline.promptify(payload.model_dump())
+        # Retrieve brand context using RAG
+        brand_context = rag_pipeline.rag_retrieve(payload.model_dump())
+        
+        # Generate enhanced prompts with brand context
+        enhanced_payload = {**payload.model_dump(), "brand_context": brand_context}
+        _prompt = promptify_pipeline.promptify(enhanced_payload)
 
         copies = []
         images = []
         for ch in payload.channels:
-            # TODO: call LLM provider
-            copies.append(text_pipeline.generate_text({"channel": ch, **payload.model_dump()}))
-            # TODO: call image provider (e.g., Replicate, SDXL)
-            images.append(image_pipeline.generate_image({"channel": ch, **payload.model_dump()}))
+            # Generate text with enhanced context
+            channel_data = {"channel": ch, **enhanced_payload}
+            copies.append(text_pipeline.generate_text(channel_data))
+            
+            # Generate images with enhanced context
+            images.append(image_pipeline.generate_image(channel_data))
 
-        # TODO: score/critique content
-        _score = score_pipeline.score_content({"copies": copies, "images": images})
+        # Score content with detailed metrics
+        score_result = score_pipeline.score_content({"copies": copies, "images": images})
 
-        # Immediately complete with mocked results
+        # Complete with enhanced results
         result: Dict[str, Any] = {
             "copy": copies,
             "images": images,
-            "meta": {"score": _score},
+            "meta": {
+                "score": score_result,
+                "brand_context": brand_context,
+                "prompt_used": _prompt
+            },
         }
 
         JOBS[job_id].update({

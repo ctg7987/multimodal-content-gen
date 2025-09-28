@@ -1,9 +1,18 @@
 fastapi
-uvicorn
+uvicorn[standard]
 pydantic
 numpy
 pillow
 transformers
-# open-clip-torch
-# Uncomment when needed
 python-dotenv
+openai
+replicate
+redis
+celery
+sqlalchemy
+alembic
+pinecone
+boto3
+httpx
+python-multipart
+jinja2
