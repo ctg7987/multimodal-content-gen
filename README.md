@@ -1,26 +1,22 @@
 # Multimodal Marketing Content Generator
 
-A full-stack application that generates professional marketing content across multiple channels using AI-powered pipelines. Built with FastAPI backend and Next.js frontend.
+A full-stack application that generates professional marketing content across multiple channels using AI-powered pipelines. Built with FastAPI backend and React frontend.
 
-## 🖼️ Screenshots
+## Screenshots
 
-### Prompt Interface
-![Prompt Interface](docs/prompt-interface-screenshot.png)
+### Application Interface
+![Application Screenshot](docs/app-screenshot.png)
 
 *The clean, modern form interface for entering campaign details*
 
-### Generated Results
-![Generated Results](docs/multimodal-content-generator-screenshot.png)
-*Real AI-generated marketing content with professional copy and images using GPT-4 and DALL-E-3*
-
-## ✅ Current Status
+## Current Status
 
 **FULLY FUNCTIONAL** - The application is working with:
-- ✅ **Real AI Text Generation** using GPT-4
-- ✅ **Real AI Image Generation** using DALL-E-3  
-- ✅ **Professional Marketing Content** across all channels
-- ✅ **Clean, Modern UI** with green and white theme
-- ✅ **No API Errors** - All integrations working smoothly
+-  **Real AI Text Generation** using GPT-4
+-  **Real AI Image Generation** using DALL-E-3  
+-  **Professional Marketing Content** across all channels
+-  **Clean, Modern UI** with green and white theme
+-  **No API Errors** - All integrations working smoothly
 
 ## Features
 
@@ -34,7 +30,7 @@ A full-stack application that generates professional marketing content across mu
 ## Architecture
 
 - **Backend**: FastAPI with AI pipeline integrations
-- **Frontend**: Next.js with TypeScript
+- **Frontend**: React with TypeScript and Vite
 - **AI Providers**: OpenAI (GPT-4 + DALL-E-3), Pinecone
 - **Database**: SQLite (configurable to PostgreSQL)
 - **Storage**: S3-compatible storage for generated images
@@ -83,7 +79,7 @@ uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 cd web
 npm install
 
-# Start the frontend development server
+# Start the React development server with Vite
 npm run dev
 ```
 
@@ -180,14 +176,19 @@ multimodal-content-gen/
 │       ├── rag.py               # RAG retrieval (Pinecone)
 │       ├── promptify.py         # Prompt engineering
 │       └── score.py             # Content scoring
-├── web/                         # Next.js frontend
-│   ├── app/
-│   │   ├── layout.tsx           # Root layout
-│   │   └── page.tsx             # Main page
+├── web/                         # React frontend
+│   ├── src/
+│   │   ├── components/
+│   │   │   └── MarketingForm.tsx  # Main form component
+│   │   ├── App.tsx              # Root app component
+│   │   ├── main.tsx             # Entry point
+│   │   └── index.css            # Global styles
+│   ├── index.html               # HTML template
+│   ├── vite.config.ts           # Vite configuration
 │   ├── package.json
 │   └── tsconfig.json
 ├── docs/                        # Documentation
-│   └── multimodal-content-generator-screenshot.png
+│   └── app-screenshot.png
 ├── requirements.txt             # Python dependencies
 ├── docker-compose.yml           # Docker configuration
 ├── setup.py                     # Setup automation
@@ -221,7 +222,7 @@ python test_full_system.py
 
 ### Adding New Channels
 
-1. Update the channel options in `web/app/page.tsx`
+1. Update the channel options in `web/src/components/MarketingForm.tsx`
 2. Add channel-specific prompts in `app/pipelines/text.py`
 3. Configure image dimensions in `app/pipelines/image.py`
 
